@@ -11,57 +11,48 @@ import org.apache.commons.lang.builder.ToStringStyle;
 @XmlRootElement(name = "record")
 public class Report {
 
-    private int id;
-    private BigDecimal sales;
-    private int qty;
-    private String staffName;
-    private Date date;
+    private String isin;
+    private int quantity;
+    private Long price;
+    private String customer;
 
-    @XmlAttribute(name = "id")
-    public int getId() {
-        return id;
+    @XmlElement(name = "ISIN")
+    public String getIsin() {
+        return isin;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIsin(String isin) {
+        this.isin = isin;
+    }
+    
+    @XmlElement(name = "Quantity")
+    public int getQuantity() {
+        return quantity;
     }
 
-    @XmlElement(name = "sales")
-    public BigDecimal getSales() {
-        return sales;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public void setSales(BigDecimal sales) {
-        this.sales = sales;
+    @XmlElement(name = "Price")
+    public Long getPrice() {
+        return price;
     }
 
-    @XmlElement(name = "qty")
-    public int getQty() {
-        return qty;
+    public void setPrice(Long price) {
+        this.price = price;
     }
 
-    public void setQty(int qty) {
-        this.qty = qty;
+    @XmlElement(name = "Customer")
+    public String getCustomer() {
+        return customer;
     }
 
-    @XmlElement(name = "staffName")
-    public String getStaffName() {
-        return staffName;
+    public void setCustomer(String customer) {
+        this.customer = customer;
     }
-
-    public void setStaffName(String staffName) {
-        this.staffName = staffName;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    @Override
+    
+            @Override
     public String toString() {
         return ReflectionToStringBuilder.reflectionToString(
                 this, ToStringStyle.MULTI_LINE_STYLE);

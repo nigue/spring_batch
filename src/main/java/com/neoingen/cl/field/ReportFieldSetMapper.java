@@ -10,29 +10,19 @@ import org.springframework.batch.item.file.transform.FieldSet;
 import org.springframework.validation.BindException;
 
 public class ReportFieldSetMapper implements FieldSetMapper<Report> {
-
+    
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     private static final Logger LOGGER = LoggerFactory.getLogger(ReportFieldSetMapper.class);
-
+    
     @Override
     public Report mapFieldSet(FieldSet fieldSet) throws BindException {
-
+        
         Report report = new Report();
-        report.setId(fieldSet.readInt(0));
-        report.setSales(fieldSet.readBigDecimal(1));
-        report.setQty(fieldSet.readInt(2));
-        report.setStaffName(fieldSet.readString(3));
-
-            //default format yyyy-MM-dd
-        //fieldSet.readDate(4);
-        String date = fieldSet.readString(4);
-        try {
-            report.setDate(dateFormat.parse(date));
-        } catch (ParseException ex) {
-            LOGGER.debug(ex.getLocalizedMessage());
-        }
-
+        report.setIsin(fieldSet.readString("ISIN"));
+        report.setQuantity(fieldSet.readInt("Quantity"));
+        report.setPrice(fieldSet.readLong("Price"));
+        report.setCustomer(fieldSet.readString("Customer"));
         return report;
-
+        
     }
 }
