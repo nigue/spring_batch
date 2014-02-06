@@ -5,7 +5,7 @@ import org.quartz.JobExecutionException;
 import org.quartz.StatefulJob;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
-public class RunMeJob extends QuartzJobBean implements StatefulJob{
+public class RunMeJob extends QuartzJobBean implements StatefulJob {
 
     private RunMeTask runMeTask;
 
