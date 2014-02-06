@@ -30,13 +30,13 @@
  
     <bean id="cvsFileItemReader" class="org.springframework.batch.item.file.FlatFileItemReader">
  
-        <property name="resource" value="file:${user.home}${file.separator}.batch${file.separator}flat${file.separator}input${file.separator}data.TXT" />
+        <property name="resource" value="file:${user.home}${file.separator}.batch${file.separator}flat${file.separator}input${file.separator}data" />
  
         <property name="lineMapper">
             <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
                 <property name="lineTokenizer">
                     <bean id="fixedLengthLineTokenizer"
-                          class="org.springframework.batch.io.file.transform.FixedLengthTokenizer">
+                          class="org.springframework.batch.item.file.transform.FixedLengthTokenizer">
                         <property name="names" value="ISIN,Quantity,Price,Customer" />
                         <property name="columns" value="1-12,13-15,16-20,21-29" />
                     </bean>
