@@ -20,11 +20,14 @@ public class Procedure {
     private ApplicationContext context;
 
     public void process() {
-        LOGGER.debug("hola mundo");
+        float version = 0.5f;
+        LOGGER.debug("\n\n\n\n##################################### INICIO INICIO INICIO INICIO\n"
+                + "inicio de Spring Batch - ver " + version
+                + "\n##################################### INICIO INICIO INICIO INICIO\n\n");
 
         context = new ClassPathXmlApplicationContext("spring"
-                        + FileSystems.getDefault().getSeparator()
-                        + "job-hello-world.xml");
+                + FileSystems.getDefault().getSeparator()
+                + "job-hello-world.xml");
 
         JobLauncher jobLauncher = (JobLauncher) context.getBean("jobLauncher");
         Job job = (Job) context.getBean("helloWorldJob");
@@ -44,6 +47,8 @@ public class Procedure {
             LOGGER.debug(e.getLocalizedMessage());
         }
 
-        System.out.println("Done");
+        LOGGER.debug("\n\n##################################### TERMINO TERMINO TERMINO TERMINO\n"
+                + "termino de Spring Batch"
+                + "\n##################################### TERMINO TERMINO TERMINO TERMINO\n\n\n\n");
     }
 }
