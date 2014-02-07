@@ -1,6 +1,9 @@
 package com.neoingen.cl.execute;
 
 import java.nio.file.FileSystems;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
@@ -21,10 +24,12 @@ public class Procedure {
 
     public void process() {
 //        FixedLengthTokenizer fixedLengthTokenizer = new FixedLengthTokenizer();
-        
-        float version = 0.51f;
+
+        float version = 0.52f;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
         LOGGER.debug("\n\n\n\n##################################### INICIO INICIO INICIO INICIO\n"
-                + "inicio de Spring Batch [FLAT] - ver " + version
+                + "inicio de Spring Batch [FLAT] - ver " + version + " at " + date.toString()
                 + "\n##################################### INICIO INICIO INICIO INICIO\n\n");
 
         context = new ClassPathXmlApplicationContext("spring"
@@ -49,8 +54,9 @@ public class Procedure {
             LOGGER.debug(e.getLocalizedMessage());
         }
 
+        date = new Date();
         LOGGER.debug("\n\n\n\n##################################### TERMINO TERMINO TERMINO TERMINO\n"
-                + "termino de Spring Batch [FLAT]"
+                + "termino de Spring Batch [FLAT] - ver " + version + " at " + date.toString()
                 + "\n##################################### TERMINO TERMINO TERMINO TERMINO\n\n");
     }
 }
