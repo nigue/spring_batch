@@ -19,7 +19,7 @@
     <batch:job id="helloWorldJob">
         <batch:step id="step1">
             <batch:tasklet>
-                <batch:chunk reader="cvsFileItemReader" 
+                <batch:chunk reader="lengthFileItemReader" 
                              writer="xmlItemWriter" 
                              processor="itemProcessor" 
                              commit-interval="10">
@@ -28,7 +28,7 @@
         </batch:step>
     </batch:job>
  
-    <bean id="cvsFileItemReader" class="org.springframework.batch.item.file.FlatFileItemReader">
+    <bean id="lengthFileItemReader" class="org.springframework.batch.item.file.FlatFileItemReader">
  
         <property name="resource" value="file:${user.home}${file.separator}.batch${file.separator}flat${file.separator}input${file.separator}data" />
  

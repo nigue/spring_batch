@@ -22,7 +22,7 @@ public class Procedure {
     public void process() {
 //        FixedLengthTokenizer fixedLengthTokenizer = new FixedLengthTokenizer();
         
-        float version = 0.5f;
+        float version = 0.51f;
         LOGGER.debug("\n\n\n\n##################################### INICIO INICIO INICIO INICIO\n"
                 + "inicio de Spring Batch [FLAT] - ver " + version
                 + "\n##################################### INICIO INICIO INICIO INICIO\n\n");

@@ -1,8 +1,5 @@
 package com.neoingen.cl.model;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
@@ -24,7 +21,7 @@ public class Report {
     public void setIsin(String isin) {
         this.isin = isin;
     }
-    
+
     @XmlElement(name = "Quantity")
     public int getQuantity() {
         return quantity;
@@ -51,8 +48,8 @@ public class Report {
     public void setCustomer(String customer) {
         this.customer = customer;
     }
-    
-            @Override
+
+    @Override
     public String toString() {
         return ReflectionToStringBuilder.reflectionToString(
                 this, ToStringStyle.MULTI_LINE_STYLE);
