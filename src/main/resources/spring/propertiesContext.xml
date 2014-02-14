@@ -17,4 +17,10 @@
         </property>
     </bean>
 
+    <bean id="storage"
+          class="com.neoingen.cl.pojo.file.data.Storage">
+        <property name="dataIn"             value="${dataIn.path}"/>
+        <property name="dataOut"            value="${dataOut.path}"/>
+    </bean>
+
 </beans>

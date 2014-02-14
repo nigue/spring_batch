@@ -1,7 +1,6 @@
 package com.neoingen.cl.field;
 
 import com.neoingen.cl.model.Report;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

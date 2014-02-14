@@ -1,6 +1,7 @@
 package com.neoingen.cl.execute;
 
-import java.nio.file.FileSystems;
+import com.neoingen.cl.context.GlobalContext;
+import com.neoingen.cl.file.FileStorage;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,30 +15,31 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Procedure {
 
+    private FileStorage fileStorage;
     private static final Logger LOGGER = LoggerFactory.getLogger(Procedure.class);
-    private ApplicationContext context;
 
     public void process() {
-//        FixedLengthTokenizer fixedLengthTokenizer = new FixedLengthTokenizer();
 
-        float version = 0.52f;
+        float version = 0.571f;
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         LOGGER.debug("\n\n\n\n##################################### INICIO INICIO INICIO INICIO\n"
                 + "inicio de Spring Batch [FLAT] - ver " + version + " at " + date.toString()
                 + "\n##################################### INICIO INICIO INICIO INICIO\n\n");
 
-        context = new ClassPathXmlApplicationContext("spring"
-                + FileSystems.getDefault().getSeparator()
-                + "job-hello-world.xml");
+        setFileStorage(new FileStorage());
+        
+        if (getFileStorage().getData().isEmpty()){
+            LOGGER.debug("No hay datos en data in");
+        }
+        
+        GlobalContext context = new GlobalContext("job-hello-world");
 
-        JobLauncher jobLauncher = (JobLauncher) context.getBean("jobLauncher");
-        Job job = (Job) context.getBean("helloWorldJob");
+        JobLauncher jobLauncher = (JobLauncher) context.getContext().getBean("jobLauncher");
+        Job job = (Job) context.getContext().getBean("helloWorldJob");
 
         try {
 
@@ -54,9 +56,19 @@ public class Procedure {
             LOGGER.debug(e.getLocalizedMessage());
         }
 
+        getFileStorage().moveFiles();
+        
         date = new Date();
         LOGGER.debug("\n\n\n\n##################################### TERMINO TERMINO TERMINO TERMINO\n"
                 + "termino de Spring Batch [FLAT] - ver " + version + " at " + date.toString()
                 + "\n##################################### TERMINO TERMINO TERMINO TERMINO\n\n");
+    }
+
+    public FileStorage getFileStorage() {
+        return fileStorage;
+    }
+
+    public void setFileStorage(FileStorage fileStorage) {
+        this.fileStorage = fileStorage;
     }
 }

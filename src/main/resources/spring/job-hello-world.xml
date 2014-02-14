@@ -9,6 +9,7 @@
  
     <import resource="classpath:spring/batchContext.xml" />
     <import resource="classpath:spring/databaseContext.xml" />
+    <import resource="classpath:spring/propertiesContext.xml" />
  
     <bean id="report" 
           class="com.neoingen.cl.model.Report" 
@@ -19,7 +20,7 @@
     <batch:job id="helloWorldJob">
         <batch:step id="step1">
             <batch:tasklet>
-                <batch:chunk reader="lengthFileItemReader" 
+                <batch:chunk reader="multiResourceReader" 
                              writer="xmlItemWriter" 
                              processor="itemProcessor" 
                              commit-interval="10">
@@ -28,9 +29,15 @@
         </batch:step>
     </batch:job>
  
+    <bean id="multiResourceReader"
+          class=" org.springframework.batch.item.file.MultiResourceItemReader">
+        <property name="resources" value="file:${dataIn.path}*" />
+        <property name="delegate" ref="lengthFileItemReader" />
+    </bean>
+ 
     <bean id="lengthFileItemReader" class="org.springframework.batch.item.file.FlatFileItemReader">
  
-        <property name="resource" value="file:${user.home}${file.separator}.batch${file.separator}flat${file.separator}input${file.separator}data" />
+        <!--<property name="resource" value="file:${user.home}${file.separator}.batch${file.separator}flat${file.separator}input${file.separator}data" />-->
  
         <property name="lineMapper">
             <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
@@ -55,7 +62,23 @@
         </property>
  
     </bean>
- 
+    
+<!--    <bean id="extractWriter" 
+          class="org.springframework.batch.item.file.FlatFileItemWriter">
+        <property name="resource" value="file:/home/anibal/.batch/flat/output/"/>
+        <property name="lineAggregator">
+             <bean class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+            <property name="delimiter" value=","/>
+            <property name="fieldExtractor">
+                <bean class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+                    <property name="names" value="ISIN,Quantity,Price,Customer"/>
+                </bean>
+            </property>
+        </bean>
+        </property>
+        <property name="transactional" value="true"/>
+
+    </bean>-->
     <bean id="xmlItemWriter" class="org.springframework.batch.item.xml.StaxEventItemWriter">
         <property name="resource" value="file:${user.home}${file.separator}.batch${file.separator}xml${file.separator}output${file.separator}report.xml" />
         <property name="marshaller" ref="reportMarshaller" />
