@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
@@ -23,7 +24,7 @@ public class Procedure {
 
     public void process() {
 
-        float version = 0.571f;
+        float version = 0.573f;
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         LOGGER.debug("\n\n\n\n##################################### INICIO INICIO INICIO INICIO\n"
@@ -31,19 +32,19 @@ public class Procedure {
                 + "\n##################################### INICIO INICIO INICIO INICIO\n\n");
 
         setFileStorage(new FileStorage());
-        
-        if (getFileStorage().getData().isEmpty()){
+
+        if (getFileStorage().getData().isEmpty()) {
             LOGGER.debug("No hay datos en data in");
         }
-        
+
         GlobalContext context = new GlobalContext("job-hello-world");
 
         JobLauncher jobLauncher = (JobLauncher) context.getContext().getBean("jobLauncher");
         Job job = (Job) context.getContext().getBean("helloWorldJob");
 
         try {
-
-            JobExecution execution = jobLauncher.run(job, new JobParameters());
+            JobParametersBuilder jpBuilder = new JobParametersBuilder().addString("input.file.name", "*");
+            JobExecution execution = jobLauncher.run(job, jpBuilder.toJobParameters());
             System.out.println("Exit Status : " + execution.getStatus());
 
         } catch (JobParametersInvalidException e) {
@@ -57,7 +58,7 @@ public class Procedure {
         }
 
         getFileStorage().moveFiles();
-        
+
         date = new Date();
         LOGGER.debug("\n\n\n\n##################################### TERMINO TERMINO TERMINO TERMINO\n"
                 + "termino de Spring Batch [FLAT] - ver " + version + " at " + date.toString()

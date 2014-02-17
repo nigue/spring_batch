@@ -30,8 +30,9 @@
     </batch:job>
  
     <bean id="multiResourceReader"
-          class=" org.springframework.batch.item.file.MultiResourceItemReader">
-        <property name="resources" value="file:${dataIn.path}*" />
+          class=" org.springframework.batch.item.file.MultiResourceItemReader"
+          scope="step">
+        <property name="resources" value="file:${dataIn.path}#{jobParameters['input.file.name']}" />
         <property name="delegate" ref="lengthFileItemReader" />
     </bean>
  
